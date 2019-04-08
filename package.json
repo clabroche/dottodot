@@ -6,7 +6,9 @@
   "scripts": {
     "test": "cd dottodot && npm t && cd ../server/ && npm t",
     "release": "standard-version",
-    "commit": "git cz"
+    "commit": "git cz",
+    "dev:server": "cd server && nodemon node ./bin/app",
+    "dev:client": "cd dottodot && npm run serve"
   },
   "dependencies": {},
   "devDependencies": {
