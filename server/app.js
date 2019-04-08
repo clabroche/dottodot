@@ -1,5 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
+require('express-async-errors');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -13,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'vue')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', apiRouter);
 
@@ -24,6 +27,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   const status = err.status || 500
+  console.error(err)
   res.status(status);
   res.json({
     error: err.message,

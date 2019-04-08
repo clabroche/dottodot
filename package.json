@@ -10,7 +10,9 @@
     "dev:server": "cd server && nodemon node ./bin/app",
     "dev:client": "cd dottodot && npm run serve"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
