@@ -4,6 +4,7 @@
   "description": "",
   "main": "commitlint.config.js",
   "scripts": {
+    "postinstall": "cd dottodot && npm i && cd ../server/ && npm i",
     "test": "cd dottodot && npm t && cd ../server/ && npm t",
     "release": "standard-version",
     "commit": "git cz",
@@ -11,6 +12,7 @@
     "dev:client": "cd dottodot && npm run serve"
   },
   "dependencies": {
+    "express-fileupload": "^1.1.4",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
