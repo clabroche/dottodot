@@ -18,7 +18,7 @@
           <button @click.stop="deleteDraw(draw)"><i class="fas fa-times"></i></button>
           <button @click.stop="$router.push('/draws/' + draw.id + '/edit')"><i class="fas fa-edit"></i></button>
         </div>
-        <img :src="'http://localhost:3000' +draw.dots" alt="">
+        <img :src="VUE_APP_HOST +draw.dots" alt="">
       </div>
     </div>
   </div>
@@ -30,6 +30,7 @@ export default {
   name: 'home',
   data() {
     return {
+      VUE_APP_HOST: process.env.VUE_APP_HOST,
       draws: [],
       name: '',
       file:null,
@@ -41,35 +42,30 @@ export default {
   },
   methods: {
     async getDraws() {
-      const {data: draws} = await axios.get('http://localhost:3000/api/v1/draws', {responseType:'json'})
+      const {data: draws} = await axios.get(process.env.VUE_APP_HOST +'/api/v1/draws', {responseType:'json'})
       this.draws = draws
     },
     async deleteDraw(draw) {
-      await axios.delete('http://localhost:3000/api/v1/draws/' + draw.id)
+      await axios.delete(process.env.VUE_APP_HOST + '/api/v1/draws/' + draw.id)
       return this.getDraws()
     },
     openPopup() {
       this.showPopup = true
     },
-    submitFile(){
+    async submitFile(){
       if(!this.name) return
       let formData = new FormData();
       formData.append('file', this.file);
-      const url = 'http://localhost:3000/api/v1/draws/'+ this.name
+      const url = process.env.VUE_APP_HOST+'/api/v1/draws/'+ this.name
       const options = {
         headers: { 'Content-Type': 'multipart/form-data' },
-        // data: {
-        //   name: this.name
-        // }
       } 
-      axios.post(url, formData, options)
-      .then(function(){
-
-        console.log('SUCCESS!!');
+      await axios.post(url, formData, options)
+      .then(() => {
+        this.showPopup = false
+        return this.getDraws()
       })
-      .catch(function(){
-        console.log('FAILURE!!');
-      });
+      .catch(console.error);
       this.file = null
       this.name = ''
     },

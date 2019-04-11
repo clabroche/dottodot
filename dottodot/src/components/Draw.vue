@@ -45,8 +45,8 @@ export default {
     const id = this.$route.params.id
     this.canvas = d3.select("canvas")
     this.ctx = this.canvas.node().getContext("2d")
-    const {data: draw} = await Axios.get('http://localhost:3000/api/v1/draws/' + id)
-    const {data: paths} = await Axios.get('http://localhost:3000' + draw.json)
+    const {data: draw} = await Axios.get(process.env.VUE_APP_HOST + '/api/v1/draws/' + id)
+    const {data: paths} = await Axios.get(process.env.VUE_APP_HOST + draw.json)
     this.draw = draw
     this.paths = paths
     let resolvedPoints = localStorage.getItem('resolvedPoints-' + this.$route.params.id)
@@ -172,7 +172,7 @@ export default {
           point.resolved = false
         })
       })
-      await Axios.put('http://localhost:3000/api/v1/draws/'+ this.$route.params.id, this.paths)
+      await Axios.put(process.env.VUE_APP_HOST +'/api/v1/draws/'+ this.$route.params.id, this.paths)
     }
   },
 }

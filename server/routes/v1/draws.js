@@ -127,13 +127,11 @@ function colorRand() {
 async function getContours(im) {
   const kernel = cv.getStructuringElement(cv.MORPH_DILATE, new cv.Size(2,2))
   im = im.dilate(kernel)
-  cv.imwrite('./a.png', im)
   let contours = (await im.findContoursAsync(cv.RETR_LIST, cv.CHAIN_APPROX_TC89_L1))
     .map(contour => {
       const M = contour.moments()
       const point = new cv.Point2(M["m10"] / M["m00"], M["m01"] / M["m00"])
       im.drawRectangle(point, new cv.Point2(point.x + 2,point.y + 2), new cv.Vec3(255,255,255))
-      cv.imwrite('./b.png', im)
       return {contour, point}
     })
     .filter(contour => contour.contour.area > 20)
@@ -151,7 +149,6 @@ async function readImage(inputPath, outputPath) {
 
   const grayImg = await img.bgrToGrayAsync();
   const canny = await grayImg.cannyAsync(200,100)
-  await cv.imwriteAsync('./a.png', canny)
   return canny
 }
 
