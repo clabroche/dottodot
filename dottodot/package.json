@@ -5,12 +5,20 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "moveToServer": "mv dist ../server/vue",
-    "cordova-build-android": "vue-cli-service cordova-build-android",
     "lint": "vue-cli-service lint",
+    "commit": "cd ../ && npm run commit",
+    "cordova-build-android": "vue-cli-service cordova-build-android",
+    "cordova-build-browser": "vue-cli-service cordova-build-browser",
+    "cordova-build-ios": "vue-cli-service cordova-build-ios",
+    "cordova-build-osx": "vue-cli-service cordova-build-osx",
+    "cordova-prepare": "vue-cli-service cordova-prepare",
+    "cordova-serve-android": "vue-cli-service cordova-serve-android",
+    "cordova-serve-browser": "vue-cli-service cordova-serve-browser",
+    "cordova-serve-ios": "vue-cli-service cordova-serve-ios",
+    "cordova-serve-osx": "vue-cli-service cordova-serve-osx",
+    "moveToServer": "mv dist ../server/vue",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit",
-    "commit": "cd ../ && npm run commit"
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "^0.18.0",

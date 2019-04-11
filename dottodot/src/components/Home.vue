@@ -4,10 +4,10 @@
       Dot to Dot
     </div>
     <div class="draws">
-      <button class="button-add-draw"><i class="fas fa-plus"></i></button>
+      <button class="button-add-draw" @click="showPopup = true"><i class="fas fa-plus"></i></button>
       <div class="popup" v-if="showPopup">
         <div class="popup-content">
-          <div class="close"><i class="fas fa-times"></i></div>
+          <div class="close" @click.stop="showPopup = false"><i class="fas fa-times"></i></div>
           <input type="text" v-model="name" placeholder="Name of this drawing...">
           <input v-if="name" type="file" id="file" ref="file" v-on:change="handleFileUpload()">
           <button v-if="name && file" v-on:click="submitFile()">Submit</button>

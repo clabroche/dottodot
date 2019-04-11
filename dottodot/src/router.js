@@ -5,7 +5,7 @@ import Home from '@/components/Home.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: process.env.CORDOVA_PLATFORM ? 'hash' : 'history',
   base: process.env.BASE_URL,
   routes: [
     {
