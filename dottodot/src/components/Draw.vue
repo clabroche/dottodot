@@ -1,6 +1,11 @@
 <template>
   <div class="">
+    <a ref="a"></a>
     <div v-if="paths && edit" class="edit-box">
+      <a :href="VUE_APP_HOST + draw.preprocessed" download>Preprocessed</a>
+      <a :href="VUE_APP_HOST + draw.dots" download>Dots</a>
+      <a :href="VUE_APP_HOST + draw.picture" download>Original</a>
+      <button @click="download()">Download</button>
       <button @click="save()">Save</button>
       <button @click="resolve()">Resolve</button>
       <button @click="resolve(1)">Draw</button>
@@ -27,9 +32,11 @@ export default {
   },
   data() {
     return {
+      VUE_APP_HOST: process.env.VUE_APP_HOST,
       resolvedPoints: [],
       canvas: null,
       ctx: null,
+      draw: {},
       paths: [],
       width: () => this.canvas.property("width"),
       height: () => this.canvas.property("height"),
@@ -68,10 +75,25 @@ export default {
     canvas.height = window.innerHeight
     this.canvas
       .call(d3.drag().subject(this.dragsubject).on("drag", this.dragged))
-      .call(d3.zoom().scaleExtent([1 / 2, 8]).on("zoom", this.zoomed))
+      .call(d3.zoom().scaleExtent([0.2, 8]).on("zoom", this.zoomed))
       .call(this.render);
   },
   methods: {
+    download() {
+      return Axios
+        .get(process.env.VUE_APP_HOST + this.draw.preprocessed)
+        .then(response => {
+          console.log(response)
+          var  blob = new Blob([response.data], {type: "image/png"}),
+            url = window.URL.createObjectURL(blob);
+          this.$refs.a.href = url;
+          this.$refs.a.download = 'a.png';
+          this.$refs.a.click();
+          window.URL.revokeObjectURL(url);
+ 
+        })
+
+    },
     wait(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
@@ -125,7 +147,7 @@ export default {
     },
 
     render() {
-      this.ctx.lineWidth = 2;
+      this.ctx.lineWidth = 1/this.transform.k * 2;
       this.ctx.save();
       this.ctx.clearRect(0, 0, this.width(), this.height());
       this.ctx.beginPath();
@@ -143,28 +165,28 @@ export default {
             }
           } 
           if((!points[index + 1]&& !point.resolved)|| (points[index + 1] && !points[index + 1].resolved)) {
-            this.drawPoint(point, contour.color, index)
+            this.drawPoint(point, contour.color, index, this.transform.k)
           }
         });
       })
       this.ctx.restore();
     },
-    drawLine(pt1, pt2) {
+    drawLine(pt1, pt2, k) {
       this.ctx.beginPath()
       this.ctx.moveTo(pt1.x, pt1.y);
       this.ctx.lineTo(pt2.x, pt2.y);
       this.ctx.stroke();
     },
-    drawPoint(point, color, nb) {
+    drawPoint(point, color, nb, k) {
       this.ctx.beginPath();
       this.ctx.fillStyle = color
 
       this.ctx.StrokeStyle = color
-      this.ctx.moveTo(point.x + this.radius, point.y);
-      this.ctx.arc(point.x, point.y, this.radius, 0, 2 * Math.PI);
+      this.ctx.moveTo(point.x + 1/k * 6, point.y);
+      this.ctx.arc(point.x, point.y, 1/k * 6, 0, 2 * Math.PI);
       this.ctx.fill()
-      this.ctx.font = '10px serif';
-      this.ctx.fillText(nb, point.x + 5, point.y - 5);
+      this.ctx.font = 1/k * 30  + 'px serif';
+      this.ctx.fillText(nb, point.x + 1, point.y - 1);
     },
     async save() {
       this.paths.contours.forEach(contour=> {

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.1dc0b17a06f33c9f03f4e9e15f1337d9.js"
+  "precache-manifest.e45685f7e99d8125de6bd69487056de1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "dottodot"});
