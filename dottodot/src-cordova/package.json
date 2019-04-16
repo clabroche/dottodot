@@ -5,6 +5,7 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
+    "resgen": "crgen -p android,ios -I",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -17,7 +18,8 @@
     "cordova-browser": "^6.0.0"
   },
   "devDependencies": {
-    "cordova-plugin-whitelist": "^1.3.3"
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-res-generator": "^0.4.2"
   },
   "cordova": {
     "plugins": {

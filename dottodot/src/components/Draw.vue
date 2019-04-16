@@ -51,6 +51,7 @@ export default {
   async mounted() {
     const id = this.$route.params.id
     this.canvas = d3.select("canvas")
+    this.canvas.on("dblclick.zoom", null);
     this.ctx = this.canvas.node().getContext("2d")
     const {data: draw} = await Axios.get(process.env.VUE_APP_HOST + '/api/v1/draws/' + id)
     const {data: paths} = await Axios.get(process.env.VUE_APP_HOST + draw.json)
@@ -77,6 +78,8 @@ export default {
       .call(d3.drag().subject(this.dragsubject).on("drag", this.dragged))
       .call(d3.zoom().scaleExtent([0.2, 8]).on("zoom", this.zoomed))
       .call(this.render);
+    this.canvas.on("dblclick.zoom", null);
+    
   },
   methods: {
     download() {
@@ -119,7 +122,7 @@ export default {
     dragsubject() {
       const x = this.transform.invertX(d3.event.x)
       const y = this.transform.invertY(d3.event.y)
-      const r = this.radius
+      const r = this.radius + 4
       this.paths.contours.forEach(contour=> {
         if(contour.hidden) return 
         contour.path.forEach((point, index, points) => {

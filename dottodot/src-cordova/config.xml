@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.coco.coco" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.coco.draw" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Dot to Dot</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -18,6 +18,10 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <icon src="resources/android/icon/mipmap-ldpi/ic_launcher.png" density="ldpi" />
+        <icon src="resources/android/icon/mipmap-mdpi/ic_launcher.png" density="mdpi" />
+        <icon src="resources/android/icon/mipmap-hdpi/ic_launcher.png" density="hdpi" />
+        <icon src="resources/android/icon/mipmap-xhdpi/ic_launcher.png" density="xhdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
