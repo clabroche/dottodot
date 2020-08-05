@@ -12,7 +12,7 @@
     "dev:client": "cd dottodot && npm run serve"
   },
   "dependencies": {
-    "express-fileupload": "^1.1.4",
+    "express-fileupload": "^1.1.9",
     "lodash": "^4.17.13"
   },
   "devDependencies": {
